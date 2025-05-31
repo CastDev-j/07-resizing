@@ -39,6 +39,7 @@ controls.enableDamping = true;
 
 const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Animation loop
 // const clock = new THREE.Clock();
@@ -72,5 +73,22 @@ window.addEventListener("resize", () => {
   // Update camera aspect ratio and renderer size
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
+
   renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+// Handle canvas double-click to toggle fullscreen
+
+window.addEventListener("dblclick", () => {
+
+  if (!document.fullscreenElement) {
+    canvas.requestFullscreen().catch((err) => {
+      console.error(
+        `Error attempting to enable fullscreen mode: ${err.message}`
+      );
+    });
+  } else {
+    document.exitFullscreen();
+  }
 });
